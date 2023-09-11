@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.RemoveSplashScreenTheme" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">#A6F0FCFF</item>
+        <item name="colorPrimaryDark">#A6F0FCFF</item>
+        <item name="colorAccent">#A6F0FCFF</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+</resources>

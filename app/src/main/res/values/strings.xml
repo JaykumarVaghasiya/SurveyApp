@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">FirebaseMiniPracticeProject</string>
+    <string name="login">Login</string>
+    <string name="enter_password">Enter password</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="register">Register</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="already_have_account">Already have Account?</string>
+    <string name="login_here">Login Here</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="easy">Easy</string>
+    <string name="easy_to_fill_survey">Easy To Fill Survey</string>
+    <string name="easy_to_manage">Easy To Manage</string>
+    <string name="easy_to_manage_survey">Easy to manage Survey</string>
+    <string name="user_friendly">User Friendly</string>
+    <string name="the_survey_app">The Survey App</string>
+    <string name="add_forms">Add Forms</string>
+    <string name="sign_out">Sign out</string>
+    <string name="get_started">Get Started</string>
+    <string name="enter_survey_name">Enter Survey Name</string>
+    <string name="cancel">Cancel</string>
+    <string name="submit">Submit</string>
+    <string name="add_survey">Add Survey</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

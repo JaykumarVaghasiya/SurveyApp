@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "757610608365",
+    "project_id": "surveyappdotexe",
+    "storage_bucket": "surveyappdotexe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757610608365:android:cba605b5953d8797647ee4",
+        "android_client_info": {
+          "package_name": "com.jay.firebaseminipracticeproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "757610608365-fk1dlrga7nd9db4csvkkdjv12kbpiau2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNThob0izNKKvwOGWywS4v9bJutAgljeA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "757610608365-fk1dlrga7nd9db4csvkkdjv12kbpiau2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

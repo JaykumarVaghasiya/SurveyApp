@@ -1,0 +1,127 @@
+{
+  "title": "Let's Talk About your things?",
+  "description":"Please provide the following information about yourself for demographic purposes.",
+  "formId": "1",
+  "status": "PENDING",
+  "questions": [
+    {
+      "number": 1,
+      "question": "What is your Gender?",
+      "options": [
+        "Male",
+        "Female",
+        "Don't want to tell."
+      ],
+      "answer": ""
+    },
+    {
+      "number": 2,
+      "question": "How often you exercise?",
+      "options": [
+        "Daily",
+        "Weekly",
+        "Monthly",
+        "Rarely"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 3,
+      "question": "Which type of cuisine do you prefer the most?",
+      "options": [
+        "Italian",
+        "Chinese",
+        "Mexican",
+        "Indian",
+        "Japanese",
+        "Korean"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 4,
+      "question": "On average, how many hours of sleep do you get per night?",
+      "options": [
+        "4-6 hours",
+        "6-8 hours",
+        "8-10 hours",
+        "More than 10 hours",
+        "Less than 4 hours"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 5,
+      "question": "What is your preferred mode of transportation for daily commuting?",
+      "options": [
+        "Car",
+        "Bicycle",
+        "Public transit",
+        "Walking"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 6,
+      "question": "Do you enjoy outdoor activities?",
+      "options": [
+        "Yes, always",
+        "Yes, occasionally",
+        "No, not really",
+        "No, not at all"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 7,
+      "question": "How often do you read books or magazines?",
+      "options": [
+        "Daily",
+        "Weekly",
+        "Monthly",
+        "Rarely",
+        "Never"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 8,
+      "question": "Are you satisfied with your current job or occupation?",
+      "options": [
+        "Very satisfied",
+        "Satisfied",
+        "Neutral",
+        "Dissatisfied",
+        "Very dissatisfied"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 9,
+      "question": "Which age group do you belong to?",
+      "options": [
+        "Under 18",
+        "18-24",
+        "25-34",
+        "35-44",
+        "45-54",
+        "55-64",
+        "65 and over"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 10,
+      "question": "What is your highest level of education?",
+      "options": [
+        "High School or equivalent",
+        "Associate's Degree",
+        "Bachelor's Degree",
+        "Master's Degree",
+        "Ph.D. or equivalent",
+        "Other"
+      ],
+      "answer": ""
+    } 
+  ]
+}
