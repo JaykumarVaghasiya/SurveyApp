@@ -21,7 +21,7 @@ class SurveyFormActivity : AppCompatActivity() {
 
         title = findViewById(R.id.tvName)
         desc = findViewById(R.id.tvDesc)
-        questionSize= findViewById(R.id.tvQuestionSize)
+        questionSize = findViewById(R.id.tvQuestionSize)
 
         getFormInfo()
 
@@ -33,7 +33,7 @@ class SurveyFormActivity : AppCompatActivity() {
             finish()
         }
         btStart.setOnClickListener {
-            val intent= Intent(this,FillSurveyActivity::class.java)
+            val intent = Intent(this, FillSurveyActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -43,8 +43,8 @@ class SurveyFormActivity : AppCompatActivity() {
     private fun getFormInfo() {
 
         val ref = db.collection("forms")
-        ref.get().addOnSuccessListener {documentSnapShot->
-            if(documentSnapShot != null) {
+        ref.get().addOnSuccessListener { documentSnapShot ->
+            if (documentSnapShot != null) {
 
             }
         }.addOnFailureListener {

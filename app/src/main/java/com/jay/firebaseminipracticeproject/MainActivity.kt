@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity(), FormListAdapter.OnFormClickListener {
     private lateinit var formList: RecyclerView
     private lateinit var formAdapter: FormListAdapter
     private lateinit var formArrayList: ArrayList<FormModel>
-    private lateinit var db:FirebaseFirestore
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,8 +44,8 @@ class MainActivity : AppCompatActivity(), FormListAdapter.OnFormClickListener {
         formList.layoutManager = LinearLayoutManager(this)
         formList.setHasFixedSize(true)
 
-        formArrayList= arrayListOf()
-        formAdapter = FormListAdapter(formArrayList,this)
+        formArrayList = arrayListOf()
+        formAdapter = FormListAdapter(formArrayList, this)
         formList.adapter = formAdapter
         eventChangeListener()
 
@@ -74,31 +74,31 @@ class MainActivity : AppCompatActivity(), FormListAdapter.OnFormClickListener {
             if (json != null) {
                 val gson = Gson()
                 val surveyData = gson.fromJson(json, FormModel::class.java)
-                uploadFromToFireStore(db,surveyData)
+                uploadFromToFireStore(db, surveyData)
             }
         }
     }
 
     private fun eventChangeListener() {
 
-        db=FirebaseFirestore.getInstance()
+        db = FirebaseFirestore.getInstance()
         db.collection("forms")
-            .addSnapshotListener(object : EventListener<QuerySnapshot>{
+            .addSnapshotListener(object : EventListener<QuerySnapshot> {
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
-                    if(error != null){
-                        Log.e("FireStore Error",error.message.toString())
+                    if (error != null) {
+                        Log.e("FireStore Error", error.message.toString())
                         return
                     }
 
-                    for(dc:DocumentChange in value?.documentChanges!!){
-                        if(dc.type==DocumentChange.Type.ADDED){
+                    for (dc: DocumentChange in value?.documentChanges!!) {
+                        if (dc.type == DocumentChange.Type.ADDED) {
                             formArrayList.add(dc.document.toObject(FormModel::class.java))
                         }
                     }
                     formAdapter.notifyDataSetChanged()
                 }
 
-        })
+            })
 
     }
 

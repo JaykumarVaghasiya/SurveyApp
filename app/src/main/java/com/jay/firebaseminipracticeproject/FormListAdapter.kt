@@ -7,21 +7,24 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jay.firebaseminipracticeproject.data.FormModel
 
-class FormListAdapter(private val forms:ArrayList<FormModel>,private val listener: OnFormClickListener) :
+class FormListAdapter(
+    private val forms: ArrayList<FormModel>,
+    private val listener: OnFormClickListener
+) :
     RecyclerView.Adapter<FormListAdapter.FormViewHolder>() {
 
 
     inner class FormViewHolder(formView: View) : RecyclerView.ViewHolder(formView) {
 
         val title: TextView = formView.findViewById(R.id.tvFormName)
-        val desc:TextView=formView.findViewById(R.id.tvDescription)
+        val desc: TextView = formView.findViewById(R.id.tvDescription)
         val status: TextView = formView.findViewById(R.id.formStatus)
 
 
         fun bind(formModel: FormModel) {
             title.text = formModel.title
             status.text = formModel.status
-            desc.text=formModel.description
+            desc.text = formModel.description
         }
     }
 
@@ -38,11 +41,11 @@ class FormListAdapter(private val forms:ArrayList<FormModel>,private val listene
     override fun onBindViewHolder(holder: FormListAdapter.FormViewHolder, position: Int) {
         holder.bind(forms[position])
 
-        val currentItem=forms[position]
+        val currentItem = forms[position]
 
-        holder.title.text=currentItem.title
-        holder.desc.text=currentItem.description
-        holder.status.text=currentItem.status
+        holder.title.text = currentItem.title
+        holder.desc.text = currentItem.description
+        holder.status.text = currentItem.status
         holder.itemView.setOnClickListener {
             listener.onFormClick(forms[position])
         }

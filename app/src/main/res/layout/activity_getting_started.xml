@@ -19,18 +19,16 @@
         android:id="@+id/spring_dots_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
         app:dampingRatio="0.7"
         app:dotsColor="@color/black"
-        android:layout_margin="20dp"
-        app:dotsStrokeColor="@color/black"
         app:dotsCornerRadius="12dp"
         app:dotsSize="16dp"
         app:dotsSpacing="6dp"
+        app:dotsStrokeColor="@color/black"
         app:dotsStrokeWidth="2dp"
-        app:stiffness="300"
-        android:layout_gravity="center"
-        />
-
+        app:stiffness="300" />
 
 
 </LinearLayout>
