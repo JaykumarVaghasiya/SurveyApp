@@ -2,6 +2,7 @@ package com.jay.firebaseminipracticeproject
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -12,8 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.gson.Gson
 import com.jay.firebaseminipracticeproject.data.FormModel
 import com.jay.firebaseminipracticeproject.userRegistration.Login
@@ -23,6 +27,8 @@ class MainActivity : AppCompatActivity(), FormListAdapter.OnFormClickListener {
     private lateinit var auth: FirebaseAuth
     private lateinit var formList: RecyclerView
     private lateinit var formAdapter: FormListAdapter
+    private lateinit var formArrayList: ArrayList<FormModel>
+    private lateinit var db:FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,12 +42,15 @@ class MainActivity : AppCompatActivity(), FormListAdapter.OnFormClickListener {
 
         formList = findViewById(R.id.rvFormList)
         formList.layoutManager = LinearLayoutManager(this)
+        formList.setHasFixedSize(true)
 
-        formAdapter = FormListAdapter(this)
+        formArrayList= arrayListOf()
+        formAdapter = FormListAdapter(formArrayList,this)
         formList.adapter = formAdapter
+        eventChangeListener()
 
         val db = FirebaseFirestore.getInstance()
-        val query: Query = db.collection("forms")
+        db.collection("forms")
 
 
         nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
@@ -70,10 +79,33 @@ class MainActivity : AppCompatActivity(), FormListAdapter.OnFormClickListener {
         }
     }
 
+    private fun eventChangeListener() {
+
+        db=FirebaseFirestore.getInstance()
+        db.collection("forms")
+            .addSnapshotListener(object : EventListener<QuerySnapshot>{
+                override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
+                    if(error != null){
+                        Log.e("FireStore Error",error.message.toString())
+                        return
+                    }
+
+                    for(dc:DocumentChange in value?.documentChanges!!){
+                        if(dc.type==DocumentChange.Type.ADDED){
+                            formArrayList.add(dc.document.toObject(FormModel::class.java))
+                        }
+                    }
+                    formAdapter.notifyDataSetChanged()
+                }
+
+        })
+
+    }
+
     private fun uploadFromToFireStore(db: FirebaseFirestore, surveyData: FormModel) {
         db.collection("forms")
             .add(surveyData)
-            .addOnSuccessListener { documentReference ->
+            .addOnSuccessListener {
 
             }
             .addOnFailureListener { e ->
