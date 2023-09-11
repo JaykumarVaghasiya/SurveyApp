@@ -1,6 +1,7 @@
 package com.jay.firebaseminipracticeproject.data
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class FormModel(
 
@@ -14,6 +15,6 @@ data class FormModel(
     var status: String? = null,
     @SerializedName("questions")
     var questions: ArrayList<QuestionModel> = arrayListOf()
-)
+):Serializable
 
 

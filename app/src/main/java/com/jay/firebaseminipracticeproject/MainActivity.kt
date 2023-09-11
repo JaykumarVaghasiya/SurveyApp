@@ -1,17 +1,20 @@
 package com.jay.firebaseminipracticeproject
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.EventListener
@@ -142,8 +145,29 @@ class MainActivity : AppCompatActivity(), FormListAdapter.OnFormClickListener {
     }
 
     override fun onFormClick(formModel: FormModel) {
-        val intent = Intent(this@MainActivity, SurveyFormActivity::class.java)
-        startActivity(intent)
+        showConfirmationDialog(formModel)
 
     }
+
+    private fun showConfirmationDialog(formModel: FormModel){
+
+
+        val dialogBuilder=Dialog(this)
+        dialogBuilder.setContentView(R.layout.activity_survey_form)
+        dialogBuilder.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialogBuilder.setCancelable(false)
+
+        val title: MaterialTextView? = dialogBuilder.findViewById(R.id.tvName)
+        val desc: MaterialTextView?=dialogBuilder.findViewById(R.id.tvDesc)
+        val questionSize: MaterialTextView?=dialogBuilder.findViewById(R.id.tvQuestionSize)
+
+        title?.text = formModel.title
+        desc?.text = formModel.description
+        questionSize?.text = formModel.questions.size.toString()
+
+        dialogBuilder.show()
+
+
+    }
+
 }
