@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.auth.FirebaseAuth
 import com.jay.firebaseminipracticeproject.MainActivity
@@ -46,23 +47,38 @@ class Login : AppCompatActivity() {
 
     private fun loginUser() {
         val loginEmail = findViewById<TextInputEditText>(R.id.etLoginEmailId)
+        val loginEmailLayout=findViewById<TextInputLayout>(R.id.tILLoginEmail)
         val loginPassword = findViewById<TextInputEditText>(R.id.etLoginPassword)
+        val loginPasswordLayout=findViewById<TextInputLayout>(R.id.tILLoginPassword)
 
         val email = loginEmail.text.toString()
         val password = loginPassword.text.toString()
+
+        loginEmailLayout.error = null
+        loginPasswordLayout.error = null
+
+        if (email.isEmpty()) {
+            loginEmailLayout.error = getString(R.string.email_required)
+        }
+
+        if (password.isEmpty()) {
+            loginPasswordLayout.error = getString(R.string.password_required)
+        }
+
 
         if (email.isNotEmpty() && password.isNotEmpty()) {
             CoroutineScope(Dispatchers.IO).launch {
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnSuccessListener(this@Login) {
                         val intent = Intent(this@Login, MainActivity::class.java)
-                        Toast.makeText(this@Login, "Successfully Login", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@Login, R.string.successfully_Login, Toast.LENGTH_LONG)
+                            .show()
                         startActivity(intent)
                         finish()
                     }.addOnFailureListener {
                         Toast.makeText(
                             this@Login,
-                            "Your Email or Password is incorrect",
+                            R.string.email_password_incorrect,
                             Toast.LENGTH_SHORT
                         ).show()
                     }

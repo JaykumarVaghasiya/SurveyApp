@@ -36,11 +36,13 @@
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tILLoginEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp">
+                android:layout_marginEnd="20dp"
+                app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etLoginEmailId"
@@ -52,11 +54,13 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tILLoginPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp">
+                android:layout_marginEnd="20dp"
+                app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etLoginPassword"
@@ -76,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:backgroundTint="@color/skyBlue"
+        android:backgroundTint="@color/orange"
         android:text="@string/login"
         android:textColor="@color/black"
         android:textSize="20sp"
@@ -95,7 +99,7 @@
         android:clickable="true"
         android:padding="2dp"
         android:text="@string/create_an_account"
-        android:textColor="@color/skyBlue"
+        android:textColor="@color/orange"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/btLogin"

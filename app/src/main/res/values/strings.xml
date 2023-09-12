@@ -28,4 +28,13 @@
     <string name="back">Back</string>
     <string name="next">next</string>
     <string name="question">Question:</string>
+    <string name="successfully_Login">Successfully Login</string>
+    <string name="email_password_incorrect">Your Email or Password is incorrect</string>
+    <string name="registartion_failed">Failed to Register User</string>
+    <string name="successfully_saved_data">"Successfully Saved Data "</string>
+    <string name="error_firestore">FireStore Error</string>
+    <string name="log_out">Successfully Log out</string>
+    <string name="email_required">Email is required</string>
+    <string name="password_required">Password is required</string>
+    <string name="username_required">Username is required</string>
 </resources>

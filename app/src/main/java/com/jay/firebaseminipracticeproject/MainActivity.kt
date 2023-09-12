@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.auth.FirebaseAuth
@@ -109,7 +110,6 @@ class MainActivity : AppCompatActivity(), FormListAdapter.OnFormClickListener {
         db.collection("forms")
             .add(surveyData)
             .addOnSuccessListener {
-
             }
             .addOnFailureListener { e ->
                 // Handle upload failure
@@ -129,11 +129,10 @@ class MainActivity : AppCompatActivity(), FormListAdapter.OnFormClickListener {
             auth.signOut()
             val intent = Intent(this@MainActivity, Login::class.java)
             startActivity(intent)
-            Toast.makeText(this, "Successfully Log out", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.log_out, Toast.LENGTH_SHORT).show()
             finish()
         }
         return super.onOptionsItemSelected(item)
-
     }
 
     private fun checkLoggedInState() {
@@ -149,25 +148,37 @@ class MainActivity : AppCompatActivity(), FormListAdapter.OnFormClickListener {
 
     }
 
-    private fun showConfirmationDialog(formModel: FormModel){
+    private fun showConfirmationDialog(formModel: FormModel) {
 
-
-        val dialogBuilder=Dialog(this)
+        val dialogBuilder = Dialog(this)
         dialogBuilder.setContentView(R.layout.activity_survey_form)
-        dialogBuilder.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialogBuilder.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         dialogBuilder.setCancelable(false)
 
         val title: MaterialTextView? = dialogBuilder.findViewById(R.id.tvName)
-        val desc: MaterialTextView?=dialogBuilder.findViewById(R.id.tvDesc)
-        val questionSize: MaterialTextView?=dialogBuilder.findViewById(R.id.tvQuestionSize)
+        val desc: MaterialTextView? = dialogBuilder.findViewById(R.id.tvDesc)
+        val questionSize: MaterialTextView? = dialogBuilder.findViewById(R.id.tvQuestionSize)
 
         title?.text = formModel.title
         desc?.text = formModel.description
         questionSize?.text = formModel.questions.size.toString()
 
+        val back: MaterialButton = dialogBuilder.findViewById(R.id.btGoBack)
+        val start: MaterialButton = dialogBuilder.findViewById(R.id.btGoNext)
+
+        back.setOnClickListener {
+            dialogBuilder.dismiss()
+        }
+        start.setOnClickListener {
+            val intent = Intent(this, FillSurveyActivity::class.java)
+            intent.putExtra("form", formModel.formId)
+            startActivity(intent)
+            dialogBuilder.dismiss()
+        }
         dialogBuilder.show()
-
-
     }
 
 }
