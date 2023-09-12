@@ -7,6 +7,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jay.firebaseminipracticeproject.MainActivity
@@ -21,6 +22,7 @@ class RegistrationPage : AppCompatActivity() {
     private lateinit var registration: FirebaseAuth
     private val userCollectionPref = FirebaseFirestore.getInstance().collection("users")
     private lateinit var tIUserName: TextInputEditText
+    private lateinit var tILUserName: TextInputLayout
     private lateinit var btnRegister: Button
     private lateinit var tvLoginAccount: TextView
 
@@ -28,10 +30,9 @@ class RegistrationPage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration_page)
         registration = FirebaseAuth.getInstance()
-
-        tIUserName = findViewById(R.id.etUserName)
         btnRegister = findViewById(R.id.btRegister)
         tvLoginAccount = findViewById(R.id.tvLogin)
+
 
 
         btnRegister.setOnClickListener {
@@ -48,15 +49,37 @@ class RegistrationPage : AppCompatActivity() {
         val tIEmail = findViewById<TextInputEditText>(R.id.etRegisterEmailId)
         val tIPassword = findViewById<TextInputEditText>(R.id.etRegisterPassword)
 
+        val tILEmail = findViewById<TextInputLayout>(R.id.tILEmail)
+        val tILPassword = findViewById<TextInputLayout>(R.id.tILPassword)
+
+        tILUserName = findViewById(R.id.tILUserName)
+        tIUserName = findViewById(R.id.etUserName)
+
+        val userName=tIUserName.text.toString()
         val email = tIEmail.text.toString()
         val password = tIPassword.text.toString()
+
+        tILEmail.error = null
+        tILPassword.error = null
+        tILUserName.error = null
+
+        if (userName.isEmpty()) {
+            tILUserName.error = getString(R.string.username_required)
+        }
+
+        if (email.isEmpty()) {
+            tILEmail.error = getString(R.string.email_required)
+        }
+
+        if (password.isEmpty()) {
+            tILPassword.error =getString(R.string.password_required)
+        }
 
         if (email.isNotEmpty() && password.isNotEmpty()) {
             CoroutineScope(Dispatchers.IO).launch {
                 registration.createUserWithEmailAndPassword(email, password)
                     .addOnSuccessListener(this@RegistrationPage) {
                         registration = FirebaseAuth.getInstance()
-                        val userName = tIUserName.text.toString()
                         val userId = registration.uid
                         val users = User(userId, userName)
                         saveUserName(users)
@@ -67,7 +90,7 @@ class RegistrationPage : AppCompatActivity() {
                     }.addOnFailureListener {
                         Toast.makeText(
                             this@RegistrationPage,
-                            "Failed to Register User",
+                            R.string.registartion_failed,
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -82,7 +105,7 @@ class RegistrationPage : AppCompatActivity() {
             .addOnSuccessListener {
                 Toast.makeText(
                     this@RegistrationPage,
-                    "Successfully Saved Data ",
+                    R.string.successfully_saved_data,
                     Toast.LENGTH_SHORT
                 )
                     .show()

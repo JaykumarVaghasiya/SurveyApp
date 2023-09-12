@@ -15,9 +15,8 @@
         android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".AddFormActivity"
-            android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:name=".FillSurveyActivity"
+            android:exported="false" />
         <activity
             android:name=".SurveyFormActivity"
             android:exported="false" />
@@ -31,6 +30,7 @@
             android:theme="@style/Theme.RemoveSplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

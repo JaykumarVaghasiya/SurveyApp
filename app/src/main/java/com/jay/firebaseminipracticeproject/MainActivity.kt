@@ -1,19 +1,27 @@
 package com.jay.firebaseminipracticeproject
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.gson.Gson
 import com.jay.firebaseminipracticeproject.data.FormModel
 import com.jay.firebaseminipracticeproject.userRegistration.Login
@@ -23,6 +31,8 @@ class MainActivity : AppCompatActivity(), FormListAdapter.OnFormClickListener {
     private lateinit var auth: FirebaseAuth
     private lateinit var formList: RecyclerView
     private lateinit var formAdapter: FormListAdapter
+    private lateinit var formArrayList: ArrayList<FormModel>
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,12 +46,15 @@ class MainActivity : AppCompatActivity(), FormListAdapter.OnFormClickListener {
 
         formList = findViewById(R.id.rvFormList)
         formList.layoutManager = LinearLayoutManager(this)
+        formList.setHasFixedSize(true)
 
-        formAdapter = FormListAdapter(this)
+        formArrayList = arrayListOf()
+        formAdapter = FormListAdapter(formArrayList, this)
         formList.adapter = formAdapter
+        eventChangeListener()
 
         val db = FirebaseFirestore.getInstance()
-        val query: Query = db.collection("forms")
+        db.collection("forms")
 
 
         nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
@@ -65,16 +78,38 @@ class MainActivity : AppCompatActivity(), FormListAdapter.OnFormClickListener {
             if (json != null) {
                 val gson = Gson()
                 val surveyData = gson.fromJson(json, FormModel::class.java)
-                uploadFromToFireStore(db,surveyData)
+                uploadFromToFireStore(db, surveyData)
             }
         }
+    }
+
+    private fun eventChangeListener() {
+
+        db = FirebaseFirestore.getInstance()
+        db.collection("forms")
+            .addSnapshotListener(object : EventListener<QuerySnapshot> {
+                override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
+                    if (error != null) {
+                        Log.e("FireStore Error", error.message.toString())
+                        return
+                    }
+
+                    for (dc: DocumentChange in value?.documentChanges!!) {
+                        if (dc.type == DocumentChange.Type.ADDED) {
+                            formArrayList.add(dc.document.toObject(FormModel::class.java))
+                        }
+                    }
+                    formAdapter.notifyDataSetChanged()
+                }
+
+            })
+
     }
 
     private fun uploadFromToFireStore(db: FirebaseFirestore, surveyData: FormModel) {
         db.collection("forms")
             .add(surveyData)
-            .addOnSuccessListener { documentReference ->
-
+            .addOnSuccessListener {
             }
             .addOnFailureListener { e ->
                 // Handle upload failure
@@ -94,11 +129,10 @@ class MainActivity : AppCompatActivity(), FormListAdapter.OnFormClickListener {
             auth.signOut()
             val intent = Intent(this@MainActivity, Login::class.java)
             startActivity(intent)
-            Toast.makeText(this, "Successfully Log out", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.log_out, Toast.LENGTH_SHORT).show()
             finish()
         }
         return super.onOptionsItemSelected(item)
-
     }
 
     private fun checkLoggedInState() {
@@ -110,8 +144,41 @@ class MainActivity : AppCompatActivity(), FormListAdapter.OnFormClickListener {
     }
 
     override fun onFormClick(formModel: FormModel) {
-        val intent = Intent(this@MainActivity, SurveyFormActivity::class.java)
-        startActivity(intent)
+        showConfirmationDialog(formModel)
 
     }
+
+    private fun showConfirmationDialog(formModel: FormModel) {
+
+        val dialogBuilder = Dialog(this)
+        dialogBuilder.setContentView(R.layout.activity_survey_form)
+        dialogBuilder.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialogBuilder.setCancelable(false)
+
+        val title: MaterialTextView? = dialogBuilder.findViewById(R.id.tvName)
+        val desc: MaterialTextView? = dialogBuilder.findViewById(R.id.tvDesc)
+        val questionSize: MaterialTextView? = dialogBuilder.findViewById(R.id.tvQuestionSize)
+
+        title?.text = formModel.title
+        desc?.text = formModel.description
+        questionSize?.text = formModel.questions.size.toString()
+
+        val back: MaterialButton = dialogBuilder.findViewById(R.id.btGoBack)
+        val start: MaterialButton = dialogBuilder.findViewById(R.id.btGoNext)
+
+        back.setOnClickListener {
+            dialogBuilder.dismiss()
+        }
+        start.setOnClickListener {
+            val intent = Intent(this, FillSurveyActivity::class.java)
+            intent.putExtra("form", formModel.formId)
+            startActivity(intent)
+            dialogBuilder.dismiss()
+        }
+        dialogBuilder.show()
+    }
+
 }
