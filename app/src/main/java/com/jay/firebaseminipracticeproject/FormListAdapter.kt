@@ -20,7 +20,6 @@ class FormListAdapter(
         val desc: TextView = formView.findViewById(R.id.tvDescription)
         val status: TextView = formView.findViewById(R.id.formStatus)
 
-
         fun bind(formModel: FormModel) {
             title.text = formModel.title
             status.text = formModel.status
@@ -38,11 +37,9 @@ class FormListAdapter(
 
     }
 
-    override fun onBindViewHolder(holder: FormListAdapter.FormViewHolder, position: Int) {
-        holder.bind(forms[position])
-
+    override fun onBindViewHolder(holder: FormViewHolder, position: Int) {
         val currentItem = forms[position]
-
+        holder.bind(currentItem)
         holder.title.text = currentItem.title
         holder.desc.text = currentItem.description
         holder.status.text = currentItem.status
@@ -55,10 +52,13 @@ class FormListAdapter(
     override fun getItemCount(): Int = forms.size
 
     interface OnFormClickListener {
-
         fun onFormClick(formModel: FormModel)
+    }
 
-
+    fun submitList(form: List<FormModel>) {
+        forms.clear()
+        forms.addAll(form)
+        notifyDataSetChanged()
     }
 
 }

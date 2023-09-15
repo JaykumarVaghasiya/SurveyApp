@@ -1,7 +1,12 @@
 package com.jay.firebaseminipracticeproject.data
 
+import com.google.gson.annotations.SerializedName
+
 data class User(
-    val id:String?,
-    val userName: String,
-    val isAdmin: Boolean = false
+    @SerializedName("id")
+    val id:String?=null,
+    @SerializedName("userName")
+    val userName: String="",
+    @SerializedName("admin")
+    val admin: Boolean=false
 )

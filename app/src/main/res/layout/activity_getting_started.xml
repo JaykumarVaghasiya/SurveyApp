@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/skyBlue"
     android:orientation="vertical"
     tools:context=".onBoarding.GettingStarted">
 
@@ -22,11 +21,11 @@
         android:layout_gravity="center"
         android:layout_margin="20dp"
         app:dampingRatio="0.7"
-        app:dotsColor="@color/black"
+        app:dotsColor="@color/navyBlue"
         app:dotsCornerRadius="12dp"
         app:dotsSize="16dp"
         app:dotsSpacing="6dp"
-        app:dotsStrokeColor="@color/black"
+        app:dotsStrokeColor="@color/skyBlue"
         app:dotsStrokeWidth="2dp"
         app:stiffness="300" />
 

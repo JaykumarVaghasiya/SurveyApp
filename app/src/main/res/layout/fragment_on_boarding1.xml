@@ -16,7 +16,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/easy"/>
 
     <TextView
         android:id="@+id/fgTitle"
@@ -26,7 +27,6 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="24dp"
         android:text="@string/easy"
-        android:textColor="#000000"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
@@ -40,7 +40,6 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="@string/easy_to_fill_survey"
-        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="@+id/fgTitle"
         app:layout_constraintStart_toStartOf="@+id/fgTitle"
         app:layout_constraintTop_toBottomOf="@+id/fgTitle" />

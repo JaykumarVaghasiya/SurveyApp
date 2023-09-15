@@ -35,37 +35,13 @@
     <RadioGroup
         android:id="@+id/rgOptions"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:foregroundGravity="center"
-        android:gravity="center"
+        android:layout_margin="10dp"
+       android:dividerPadding="@dimen/cardview_default_elevation"
         android:layout_weight="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="0"
-        android:layout_gravity="center">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/orange"
-            android:layout_marginEnd="60dp"
-            android:text="@string/submit"
-            android:textColor="@color/black"
-            app:layout_constraintBaseline_toBaselineOf="@+id/btSubmit" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btSubmit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/orange"
-            android:text="@string/back"
-
-            android:textColor="@color/black" />
-    </LinearLayout>
 </LinearLayout>

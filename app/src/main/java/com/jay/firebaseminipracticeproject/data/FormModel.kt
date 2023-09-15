@@ -12,7 +12,7 @@ data class FormModel(
     @SerializedName("formId")
     var formId: String? = null,
     @SerializedName("status")
-    var status: String? = null,
+    var status: String? = "PENDING",
     @SerializedName("questions")
     var questions: ArrayList<QuestionModel> = arrayListOf()
 ):Serializable

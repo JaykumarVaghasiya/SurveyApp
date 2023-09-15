@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FirebaseMiniPracticeProject</string>
+    <string name="app_name">Survey+</string>
     <string name="login">Login</string>
     <string name="enter_password">Enter password</string>
     <string name="enter_email">Enter Email</string>
@@ -14,7 +14,7 @@
     <string name="easy_to_manage">Easy To Manage</string>
     <string name="easy_to_manage_survey">Easy to manage Survey</string>
     <string name="user_friendly">User Friendly</string>
-    <string name="the_survey_app">The Survey App</string>
+    <string name="the_survey_app">Survey+</string>
     <string name="add_forms">Add Forms</string>
     <string name="sign_out">Sign out</string>
     <string name="get_started">Get Started</string>
@@ -26,7 +26,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="start">Start</string>
     <string name="back">Back</string>
-    <string name="next">next</string>
+    <string name="next">Next</string>
     <string name="question">Question:</string>
     <string name="successfully_Login">Successfully Login</string>
     <string name="email_password_incorrect">Your Email or Password is incorrect</string>
@@ -37,4 +37,8 @@
     <string name="email_required">Email is required</string>
     <string name="password_required">Password is required</string>
     <string name="username_required">Username is required</string>
+    <string name="total_questions">Total Questions:</string>
+    <string name="or">or</string>
+
+    <style name="surveyApp_logo">Survey+ Logo</style>
 </resources>

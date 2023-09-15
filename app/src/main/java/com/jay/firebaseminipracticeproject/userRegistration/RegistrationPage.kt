@@ -81,7 +81,7 @@ class RegistrationPage : AppCompatActivity() {
                     .addOnSuccessListener(this@RegistrationPage) {
                         registration = FirebaseAuth.getInstance()
                         val userId = registration.uid
-                        val users = User(userId, userName)
+                        val users = User(userId, userName,false)
                         saveUserName(users)
                         val intent = Intent(this@RegistrationPage, MainActivity::class.java)
                         intent.putExtra("userName", userName)
