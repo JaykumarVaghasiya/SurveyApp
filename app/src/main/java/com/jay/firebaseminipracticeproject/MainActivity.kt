@@ -37,7 +37,8 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        val userName=intent.getStringExtra("name")
+        supportActionBar?.title = "Hello, $userName"
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
@@ -157,6 +158,7 @@ class MainActivity : AppCompatActivity(),
         start.setOnClickListener {
             val intent = Intent(this, FillSurveyActivity::class.java)
             intent.putExtra("form", formModel.formId)
+                .putExtra("user",auth.uid)
             startActivity(intent)
             dialogBuilder.dismiss()
         }

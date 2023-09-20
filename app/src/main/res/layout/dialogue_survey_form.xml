@@ -46,7 +46,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btGoBack"
-        style="@style/Widget.Material3.Button.OutlinedButton"
+        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -60,11 +60,12 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btGoNext"
         android:layout_width="wrap_content"
+        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="@string/start"
-        android:textColor="@color/navyBlue"
-        android:backgroundTint="@color/skyBlue"
+        android:textColor="@color/skyBlue"
+        android:backgroundTint="@color/navyBlue"
         app:layout_constraintBaseline_toBaselineOf="@+id/btGoBack"
         app:layout_constraintStart_toEndOf="@+id/btGoBack"
         app:layout_constraintStart_toStartOf="@+id/guideline3" />

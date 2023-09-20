@@ -22,7 +22,7 @@ class FormListAdapter(
 
         fun bind(formModel: FormModel) {
             title.text = formModel.title
-            status.text = formModel.status
+            status.text = formModel.status.toString()
             desc.text = formModel.description
         }
     }
@@ -42,7 +42,7 @@ class FormListAdapter(
         holder.bind(currentItem)
         holder.title.text = currentItem.title
         holder.desc.text = currentItem.description
-        holder.status.text = currentItem.status
+        holder.status.text = currentItem.status.toString()
         holder.itemView.setOnClickListener {
             listener.onFormClick(forms[position])
         }

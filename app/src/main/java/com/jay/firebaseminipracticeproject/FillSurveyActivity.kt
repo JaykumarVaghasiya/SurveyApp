@@ -8,10 +8,12 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.jay.firebaseminipracticeproject.data.FormModel
 import com.jay.firebaseminipracticeproject.data.QuestionModel
 
-class FillSurveyActivity : AppCompatActivity() {
+class FillSurveyActivity : AppCompatActivity(){
 
     private lateinit var viewPager2: ViewPager2
     private lateinit var pagerAdapter: SurveyAdapter
+
+    private var formId = ""
     private lateinit var questions: ArrayList<QuestionModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +45,11 @@ class FillSurveyActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Toast.makeText(this, exception.message, Toast.LENGTH_SHORT).show()
             }
+
     }
 
+
 }
+
+
+

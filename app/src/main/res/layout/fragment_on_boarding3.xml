@@ -7,12 +7,12 @@
 
     tools:context=".onBoarding.OnBoarding3Fragment">
 
-    <ImageView
+    <pl.droidsonroids.gif.GifImageView
         android:id="@+id/imageView"
-        android:layout_width="129dp"
-        android:layout_height="128dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@drawable/uiser"
+        android:src="@drawable/yoyo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

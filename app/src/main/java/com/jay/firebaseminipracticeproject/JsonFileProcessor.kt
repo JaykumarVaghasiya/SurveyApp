@@ -1,7 +1,6 @@
 package com.jay.firebaseminipracticeproject
 
 import android.content.Context
-import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.jay.firebaseminipracticeproject.data.FormModel
@@ -28,11 +27,12 @@ class JsonFileProcessor(private val context: Context) {
                         val gson = Gson()
                         val formData = gson.fromJson(jsonString, FormModel::class.java)
 
+                        formData.formId=fileName
+
                         // Store the data in Firestore
                         firestore.collection("forms").document(fileName)
                             .set(formData)
                             .addOnSuccessListener {
-                                Log.d("Firestore", "Data successfully written to Firestore")
                             }
                             .addOnFailureListener {e->
                                 e.printStackTrace()

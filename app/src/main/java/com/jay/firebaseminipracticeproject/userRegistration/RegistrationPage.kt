@@ -83,14 +83,18 @@ class RegistrationPage : AppCompatActivity() {
                         val userId = registration.uid
                         val users = User(userId, userName,false)
                         saveUserName(users)
-                        val intent = Intent(this@RegistrationPage, MainActivity::class.java)
-                        intent.putExtra("userName", userName)
-                        startActivity(intent)
-                        finish()
-                    }.addOnFailureListener {
                         Toast.makeText(
                             this@RegistrationPage,
-                            R.string.registartion_failed,
+                            it.toString(),
+                            Toast.LENGTH_SHORT)
+                        val intent = Intent(this@RegistrationPage, MainActivity::class.java)
+                        intent.putExtra("userName", users.userName)
+                        startActivity(intent)
+                        finish()
+                    }.addOnFailureListener {e->
+                        Toast.makeText(
+                            this@RegistrationPage,
+                            e.message,
                             Toast.LENGTH_SHORT
                         ).show()
                     }

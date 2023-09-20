@@ -98,9 +98,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:backgroundTint="@color/skyBlue"
+        android:backgroundTint="@color/navyBlue"
         android:text="@string/login"
-        android:textColor="@color/navyBlue"
+        android:textColor="@color/skyBlue"
         android:textSize="20sp"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
@@ -125,7 +125,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/tvCreateAccount"
-        style="@style/Widget.Material3.Button.OutlinedButton"
+        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

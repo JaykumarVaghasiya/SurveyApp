@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".onBoarding.OnBoarding1Fragment">
 
-    <ImageView
+    <pl.droidsonroids.gif.GifImageView
         android:id="@+id/imageView"
         android:layout_width="128dp"
         android:layout_height="128dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/click"
+        android:src="@drawable/easy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
