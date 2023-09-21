@@ -88,7 +88,7 @@ class RegistrationPage : AppCompatActivity() {
                             it.toString(),
                             Toast.LENGTH_SHORT)
                         val intent = Intent(this@RegistrationPage, MainActivity::class.java)
-                        intent.putExtra("userName", users.userName)
+                        intent.putExtra("userName", users.userName).putExtra("id", userId)
                         startActivity(intent)
                         finish()
                     }.addOnFailureListener {e->

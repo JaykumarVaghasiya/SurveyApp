@@ -1,6 +1,7 @@
 package com.jay.firebaseminipracticeproject
 
 import android.content.Context
+import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.jay.firebaseminipracticeproject.data.FormModel
@@ -15,7 +16,7 @@ class JsonFileProcessor(private val context: Context) {
     fun processJsonFiles() {
         val assetManager = context.assets
         try {
-            val jsonFiles = assetManager.list("") // Get a list of all files in the assets folder
+            val jsonFiles = assetManager.list("")
 
             if (jsonFiles != null) {
                 for (fileName in jsonFiles) {
@@ -33,6 +34,11 @@ class JsonFileProcessor(private val context: Context) {
                         firestore.collection("forms").document(fileName)
                             .set(formData)
                             .addOnSuccessListener {
+                                Toast.makeText(
+                                    context,
+                                    R.string.successfully_saved_data,
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                             .addOnFailureListener {e->
                                 e.printStackTrace()

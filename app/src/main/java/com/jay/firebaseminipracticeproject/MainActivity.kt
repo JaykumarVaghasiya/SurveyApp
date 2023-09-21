@@ -37,8 +37,7 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val userName=intent.getStringExtra("name")
-        supportActionBar?.title = "Hello, $userName"
+        supportActionBar?.title = "Hello"
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
@@ -47,7 +46,7 @@ class MainActivity : AppCompatActivity(),
         FirebaseApp.initializeApp(this)
 
         jsonFileProcessor = JsonFileProcessor(this)
-        retrieveDataFromFirestore()
+        setupFirestoreListener()
 
         formList = findViewById(R.id.rvFormList)
         formList.layoutManager = LinearLayoutManager(this)
@@ -73,6 +72,7 @@ class MainActivity : AppCompatActivity(),
 
         addSurvey.setOnClickListener {
             jsonFileProcessor.processJsonFiles()
+
         }
     }
 
@@ -165,16 +165,41 @@ class MainActivity : AppCompatActivity(),
         dialogBuilder.show()
     }
 
-    private fun retrieveDataFromFirestore() {
+    private fun setupFirestoreListener() {
         db.collection("forms")
-            .get().addOnSuccessListener {documentSnapShot->
-                val formsArray= arrayListOf<FormModel>()
-                for (document in  documentSnapShot) {
-                    val forms = document.toObject(FormModel::class.java)
-                    formsArray.add(forms)
+            .addSnapshotListener { documentSnapShot, e ->
+                if (e != null) {
+
+                    Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+                    return@addSnapshotListener
                 }
+
+                val formsArray = arrayListOf<FormModel>()
+                if (documentSnapShot != null) {
+                    for (document in documentSnapShot) {
+                        val form = document.toObject(FormModel::class.java)
+                        formsArray.add(form)
+                    }
+                }
+
                 formAdapter.submitList(formsArray)
             }
     }
 
+    private fun checkIfUserFilledSurvey(userId: String, surveyId: String) {
+        db.collection("surveyResponses")
+            .whereEqualTo("userId", userId)
+            .whereEqualTo("surveyId", surveyId)
+            .get()
+            .addOnSuccessListener { documentSnapshots ->
+                if (!documentSnapshots.isEmpty) {
+
+                } else {
+
+                }
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+            }
+    }
 }
