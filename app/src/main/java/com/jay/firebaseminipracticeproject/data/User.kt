@@ -8,5 +8,6 @@ data class User(
     @SerializedName("userName")
     val userName: String?= null,
     @SerializedName("admin")
-    val admin: Boolean=false
+    val admin: Boolean=false,
+
 )

@@ -6,5 +6,5 @@ data class SurveyResponse(
     @SerializedName("userId")
     var userId: String? = "",
     @SerializedName("formId")
-    var formId: List<String> = mutableListOf(),
+    var formId: List<QuestionModel> = arrayListOf()
 )

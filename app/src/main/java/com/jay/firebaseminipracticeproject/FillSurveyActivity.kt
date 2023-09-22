@@ -1,5 +1,6 @@
 package com.jay.firebaseminipracticeproject
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -10,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jay.firebaseminipracticeproject.data.FormModel
+import com.jay.firebaseminipracticeproject.data.FormStatus
 import com.jay.firebaseminipracticeproject.data.QuestionModel
 
 class FillSurveyActivity : AppCompatActivity(), Questions.FormSurveyListener {
@@ -18,7 +20,8 @@ class FillSurveyActivity : AppCompatActivity(), Questions.FormSurveyListener {
     private lateinit var pagerAdapter: SurveyAdapter
     private lateinit var currentUser: FirebaseUser
     var formId = ""
-
+    var description = ""
+    var title = ""
 
     lateinit var questions: ArrayList<QuestionModel>
     private lateinit var submit: MaterialButton
@@ -28,6 +31,9 @@ class FillSurveyActivity : AppCompatActivity(), Questions.FormSurveyListener {
         setContentView(R.layout.activity_fill_survey)
 
         formId = intent.getStringExtra("form").toString()
+        description = intent.getStringExtra("description").toString()
+        title = intent.getStringExtra("title").toString()
+
         val db = FirebaseFirestore.getInstance()
         currentUser = FirebaseAuth.getInstance().currentUser!!
 
@@ -45,18 +51,6 @@ class FillSurveyActivity : AppCompatActivity(), Questions.FormSurveyListener {
             }
 
         })
-
-        db.collection("surveyResponse")
-            .whereEqualTo("userId", currentUser.uid)
-            .whereEqualTo("formId", formId)
-            .get()
-            .addOnSuccessListener { querySnapshot ->
-
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(this, exception.message, Toast.LENGTH_SHORT).show()
-            }
-
 
         db.collection("forms")
             .get()
@@ -80,11 +74,17 @@ class FillSurveyActivity : AppCompatActivity(), Questions.FormSurveyListener {
             }
 
         submit.setOnClickListener {
-            updateAnswerInFirestore()
+            val formModelToUpdate = FormModel(
+                title = title,
+                description = description,
+                formId = formId,
+                status = FormStatus.COMPLETED,
+                questions = questions
+            )
 
+            updateAnswerInFirestore(formModelToUpdate)
             finish()
         }
-
 
     }
 
@@ -95,29 +95,40 @@ class FillSurveyActivity : AppCompatActivity(), Questions.FormSurveyListener {
         }
     }
 
-    private fun updateAnswerInFirestore() {
+    private fun updateAnswerInFirestore(formModel: FormModel) {
         val firestore = FirebaseFirestore.getInstance()
 
-        if (formId.isNotEmpty()) {
-            firestore.collection("forms").document(formId)
-                .update("questions", questions)
-                .addOnSuccessListener {
 
+        val userId = currentUser.uid
+
+        if (formModel.formId!!.isNotEmpty() && userId.isNotEmpty()) {
+            val userFormsCollectionRef = firestore.collection("users")
+                .document(userId)
+                .collection("response")
+
+
+            userFormsCollectionRef.document(formModel.formId!!)
+                .set(formModel)
+                .addOnSuccessListener {
                     Toast.makeText(
                         this,
-                        "Answer updated successfully",
+                        "Form with answers updated successfully",
                         Toast.LENGTH_SHORT
                     ).show()
-                }.addOnFailureListener { e ->
-
+                }
+                .addOnFailureListener { e ->
                     Toast.makeText(
                         this,
-                        "Error updating answer: ${e.message}",
+                        "Error updating form with answers: ${e.message}",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
         }
-
+    }
+    private fun notifyStatusChanged(formModel: FormModel) {
+        val intent = Intent("com.your.package.formStatusChanged")
+        intent.putExtra("formId", formModel.formId)
+        sendBroadcast(intent)
     }
 
 }

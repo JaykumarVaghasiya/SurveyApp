@@ -158,7 +158,7 @@ class MainActivity : AppCompatActivity(),
         start.setOnClickListener {
             val intent = Intent(this, FillSurveyActivity::class.java)
             intent.putExtra("form", formModel.formId)
-                .putExtra("user",auth.uid)
+                .putExtra("user",auth.uid).putExtra("title",formModel.title).putExtra("description",formModel.description)
             startActivity(intent)
             dialogBuilder.dismiss()
         }
@@ -169,7 +169,6 @@ class MainActivity : AppCompatActivity(),
         db.collection("forms")
             .addSnapshotListener { documentSnapShot, e ->
                 if (e != null) {
-
                     Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
                     return@addSnapshotListener
                 }
@@ -186,20 +185,4 @@ class MainActivity : AppCompatActivity(),
             }
     }
 
-    private fun checkIfUserFilledSurvey(userId: String, surveyId: String) {
-        db.collection("surveyResponses")
-            .whereEqualTo("userId", userId)
-            .whereEqualTo("surveyId", surveyId)
-            .get()
-            .addOnSuccessListener { documentSnapshots ->
-                if (!documentSnapshots.isEmpty) {
-
-                } else {
-
-                }
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
-            }
-    }
 }

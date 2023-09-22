@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jay.firebaseminipracticeproject.data.FormModel
+import com.jay.firebaseminipracticeproject.data.FormStatus
 
 class FormListAdapter(
     private val forms: ArrayList<FormModel>,
@@ -59,6 +60,12 @@ class FormListAdapter(
         forms.clear()
         forms.addAll(form)
         notifyDataSetChanged()
+    }
+    fun updateItemStatus(position: Int, status: FormStatus) {
+        if (position in 0 until forms.size) {
+            forms[position].status = status
+            notifyItemChanged(position)
+        }
     }
 
 }
