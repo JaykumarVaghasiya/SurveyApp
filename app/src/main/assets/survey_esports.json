@@ -1,0 +1,124 @@
+{
+  "title": "E-sports Survey",
+  "description": "This survey is about your preferences and interests in E-sports.",
+  "userId": "",
+  "formId": "3",
+  "status": "PENDING",
+  "questions": [
+    {
+      "number": 1,
+      "question": "Do you follow any E-sports tournaments or leagues?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 2,
+      "question": "Which E-sports games do you enjoy watching or playing?",
+      "options": [
+        "League of Legends",
+        "Dota 2",
+        "Counter-Strike: Global Offensive",
+        "Overwatch",
+        "Rocket League",
+        "Fortnite",
+        "Valorant",
+        "Other (please specify)"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 3,
+      "question": "How often do you watch E-sports tournaments or matches?",
+      "options": [
+        "Daily",
+        "Weekly",
+        "Monthly",
+        "Rarely",
+        "Never"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 4,
+      "question": "Have you ever attended a live E-sports event?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 5,
+      "question": "What do you enjoy the most about E-sports?",
+      "options": [
+        "Competitive gameplay",
+        "Professional players and teams",
+        "Community and fan engagement",
+        "Tournament atmosphere",
+        "Casting and commentary",
+        "I'm not sure"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 6,
+      "question": "Do you play E-sports games yourself?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 7,
+      "question": "If you play E-sports games, which one(s) do you play regularly?",
+      "options": [
+        "League of Legends",
+        "Dota 2",
+        "Counter-Strike: Global Offensive",
+        "Overwatch",
+        "Rocket League",
+        "Fortnite",
+        "Valorant",
+        "Other (please specify)"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 8,
+      "question": "What platform(s) do you prefer for E-sports content (e.g., Twitch, YouTube, etc.)?",
+      "options": [
+        "Twitch",
+        "YouTube Gaming",
+        "Facebook Gaming",
+        "Other (please specify)"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 9,
+      "question": "Would you consider participating in or attending E-sports events in the future?",
+      "options": [
+        "Yes, definitely",
+        "Maybe",
+        "No"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 10,
+      "question": "What improvements would you like to see in the E-sports industry?",
+      "options": [
+        "Better player representation and rights",
+        "More diverse games and genres",
+        "Improved broadcasting and streaming quality",
+        "Increased accessibility and inclusivity",
+        "Other (please specify)"
+      ],
+      "answer": ""
+    }
+  ]
+}

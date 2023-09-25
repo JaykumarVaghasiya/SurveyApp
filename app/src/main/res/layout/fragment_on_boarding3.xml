@@ -7,16 +7,17 @@
 
     tools:context=".onBoarding.OnBoarding3Fragment">
 
-    <ImageView
+    <pl.droidsonroids.gif.GifImageView
         android:id="@+id/imageView"
-        android:layout_width="129dp"
-        android:layout_height="128dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@drawable/uiser"
+        android:src="@drawable/yoyo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/user_friendly" />
 
     <TextView
         android:id="@+id/fgTitle"
@@ -26,7 +27,6 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="24dp"
         android:text="@string/user_friendly"
-        android:textColor="#000000"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
@@ -39,21 +39,21 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text=""
-        android:textColor="#283750"
         app:layout_constraintEnd_toEndOf="@+id/fgTitle"
         app:layout_constraintStart_toStartOf="@+id/fgTitle"
         app:layout_constraintTop_toBottomOf="@+id/fgTitle" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btGetStarted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/fgTitle"
         android:layout_alignParentEnd="true"
-        android:backgroundTint="#A6F0FCFF"
+        android:backgroundTint="@color/skyBlue"
         android:paddingHorizontal="6dp"
         android:text="@string/get_started"
-        android:textColor="@color/black"
+        android:textColor="@color/navyBlue"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

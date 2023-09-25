@@ -8,18 +8,16 @@
         android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/baseline_task_24"
+        android:icon="@drawable/surveyplus"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/baseline_task_24"
+        android:roundIcon="@drawable/surveyplus"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+        android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
             android:name=".FillSurveyActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SurveyFormActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".onBoarding.GettingStarted"
             android:exported="false"
@@ -40,6 +38,7 @@
             android:parentActivityName=".userRegistration.Login" />
         <activity
             android:name=".userRegistration.Login"
+
             android:exported="false" />
         <activity
             android:name=".MainActivity"

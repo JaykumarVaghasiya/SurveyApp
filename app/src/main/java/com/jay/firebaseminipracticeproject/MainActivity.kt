@@ -3,10 +3,10 @@ package com.jay.firebaseminipracticeproject
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,105 +16,90 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.textview.MaterialTextView
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentChange
-import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.QuerySnapshot
-import com.google.gson.Gson
 import com.jay.firebaseminipracticeproject.data.FormModel
+import com.jay.firebaseminipracticeproject.data.User
 import com.jay.firebaseminipracticeproject.userRegistration.Login
 
-class MainActivity : AppCompatActivity(), FormListAdapter.OnFormClickListener {
+class MainActivity : AppCompatActivity(),
+    FormListAdapter.OnFormClickListener {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var formList: RecyclerView
     private lateinit var formAdapter: FormListAdapter
-    private lateinit var formArrayList: ArrayList<FormModel>
+    private lateinit var addSurvey: ExtendedFloatingActionButton
+    private lateinit var form: ArrayList<FormModel>
     private lateinit var db: FirebaseFirestore
+    private lateinit var jsonFileProcessor: JsonFileProcessor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        supportActionBar?.title = "Hello"
 
         auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
         checkLoggedInState()
 
-        val addSurvey = findViewById<ExtendedFloatingActionButton>(R.id.btAddForm)
-        val nestedScrollView = findViewById<NestedScrollView>(R.id.nestedScrollView)
+        FirebaseApp.initializeApp(this)
+
+        jsonFileProcessor = JsonFileProcessor(this)
+        setupFirestoreListener()
 
         formList = findViewById(R.id.rvFormList)
         formList.layoutManager = LinearLayoutManager(this)
-        formList.setHasFixedSize(true)
 
-        formArrayList = arrayListOf()
-        formAdapter = FormListAdapter(formArrayList, this)
+        form = arrayListOf()
+        formAdapter = FormListAdapter(form, this)
         formList.adapter = formAdapter
-        eventChangeListener()
 
-        val db = FirebaseFirestore.getInstance()
-        db.collection("forms")
-
-
+        checkRoles()
+        addSurvey = findViewById(R.id.btAddForm)
+        val nestedScrollView = findViewById<NestedScrollView>(R.id.nestedScrollView)
         nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             if (scrollY > oldScrollY + 12 && addSurvey.isExtended) {
                 addSurvey.shrink()
             }
-            // the delay of the extension of the FAB is set for 12 items
-            if (scrollY < oldScrollY - 12 && !addSurvey.isExtended) {
+            if (scrollY < oldScrollY - 12 && addSurvey.isExtended) {
                 addSurvey.extend()
             }
-            // if the nestedScrollView is at the first item of the list then the
-            // extended floating action should be in extended state
             if (scrollY == 0) {
                 addSurvey.extend()
             }
         })
 
         addSurvey.setOnClickListener {
-            val json = readJsonFromAssets(this, "survey_user_information.json")
+            jsonFileProcessor.processJsonFiles()
 
-            if (json != null) {
-                val gson = Gson()
-                val surveyData = gson.fromJson(json, FormModel::class.java)
-                uploadFromToFireStore(db, surveyData)
-            }
         }
     }
 
-    private fun eventChangeListener() {
 
-        db = FirebaseFirestore.getInstance()
-        db.collection("forms")
-            .addSnapshotListener(object : EventListener<QuerySnapshot> {
-                override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
-                    if (error != null) {
-                        Log.e("FireStore Error", error.message.toString())
-                        return
-                    }
+    private fun checkRoles() {
 
-                    for (dc: DocumentChange in value?.documentChanges!!) {
-                        if (dc.type == DocumentChange.Type.ADDED) {
-                            formArrayList.add(dc.document.toObject(FormModel::class.java))
+        val id = auth.uid
+        val db = FirebaseFirestore.getInstance()
+        if (id != null) {
+            db.collection("users").document(id)
+                .get()
+                .addOnSuccessListener { documentSnapshot ->
+                    if (documentSnapshot.exists()) {
+                        val userData = documentSnapshot.toObject(User::class.java)
+                        if (userData?.admin == true) {
+                            addSurvey.visibility = View.VISIBLE
+                        } else {
+                            addSurvey.visibility = View.GONE
                         }
+                    } else {
+                        db.collection("forms")
                     }
-                    formAdapter.notifyDataSetChanged()
                 }
-
-            })
-
-    }
-
-    private fun uploadFromToFireStore(db: FirebaseFirestore, surveyData: FormModel) {
-        db.collection("forms")
-            .add(surveyData)
-            .addOnSuccessListener {
-            }
-            .addOnFailureListener { e ->
-                // Handle upload failure
-                e.printStackTrace()
-            }
+                .addOnFailureListener { exception ->
+                    Toast.makeText(this, exception.message, Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -145,13 +130,11 @@ class MainActivity : AppCompatActivity(), FormListAdapter.OnFormClickListener {
 
     override fun onFormClick(formModel: FormModel) {
         showConfirmationDialog(formModel)
-
     }
-
     private fun showConfirmationDialog(formModel: FormModel) {
 
         val dialogBuilder = Dialog(this)
-        dialogBuilder.setContentView(R.layout.activity_survey_form)
+        dialogBuilder.setContentView(R.layout.dialogue_survey_form)
         dialogBuilder.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
@@ -175,10 +158,31 @@ class MainActivity : AppCompatActivity(), FormListAdapter.OnFormClickListener {
         start.setOnClickListener {
             val intent = Intent(this, FillSurveyActivity::class.java)
             intent.putExtra("form", formModel.formId)
+                .putExtra("user",auth.uid).putExtra("title",formModel.title).putExtra("description",formModel.description)
             startActivity(intent)
             dialogBuilder.dismiss()
         }
         dialogBuilder.show()
+    }
+
+    private fun setupFirestoreListener() {
+        db.collection("forms")
+            .addSnapshotListener { documentSnapShot, e ->
+                if (e != null) {
+                    Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+                    return@addSnapshotListener
+                }
+
+                val formsArray = arrayListOf<FormModel>()
+                if (documentSnapShot != null) {
+                    for (document in documentSnapShot) {
+                        val form = document.toObject(FormModel::class.java)
+                        formsArray.add(form)
+                    }
+                }
+
+                formAdapter.submitList(formsArray)
+            }
     }
 
 }

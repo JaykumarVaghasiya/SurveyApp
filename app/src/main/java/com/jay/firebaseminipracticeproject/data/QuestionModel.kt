@@ -6,9 +6,9 @@ data class QuestionModel(
     @SerializedName("number")
     var number: Int? = null,
     @SerializedName("question")
-    var question: String? = null,
+    var question: String? = "",
     @SerializedName("options")
     var options: ArrayList<String> = arrayListOf(),
     @SerializedName("answer")
-    var answer: String? = null
+    var answer: String? = ""
 )

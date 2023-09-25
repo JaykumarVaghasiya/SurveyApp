@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.auth.FirebaseAuth
 import com.jay.firebaseminipracticeproject.MainActivity
 import com.jay.firebaseminipracticeproject.R
@@ -17,16 +16,16 @@ import kotlinx.coroutines.launch
 
 class Login : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
 
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
         auth = FirebaseAuth.getInstance()
 
-
         val login = findViewById<MaterialButton>(R.id.btLogin)
-        val createAccount = findViewById<MaterialTextView>(R.id.tvCreateAccount)
+        val createAccount = findViewById<MaterialButton>(R.id.tvCreateAccount)
 
         if (auth.currentUser != null) {
             val intent = Intent(this, MainActivity::class.java)
@@ -82,8 +81,6 @@ class Login : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-
-
             }
         }
     }

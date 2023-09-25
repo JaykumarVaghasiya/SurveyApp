@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jay.firebaseminipracticeproject.data.FormModel
+import com.jay.firebaseminipracticeproject.data.FormStatus
 
 class FormListAdapter(
     private val forms: ArrayList<FormModel>,
@@ -20,10 +21,9 @@ class FormListAdapter(
         val desc: TextView = formView.findViewById(R.id.tvDescription)
         val status: TextView = formView.findViewById(R.id.formStatus)
 
-
         fun bind(formModel: FormModel) {
             title.text = formModel.title
-            status.text = formModel.status
+            status.text = formModel.status.toString()
             desc.text = formModel.description
         }
     }
@@ -38,14 +38,12 @@ class FormListAdapter(
 
     }
 
-    override fun onBindViewHolder(holder: FormListAdapter.FormViewHolder, position: Int) {
-        holder.bind(forms[position])
-
+    override fun onBindViewHolder(holder: FormViewHolder, position: Int) {
         val currentItem = forms[position]
-
+        holder.bind(currentItem)
         holder.title.text = currentItem.title
         holder.desc.text = currentItem.description
-        holder.status.text = currentItem.status
+        holder.status.text = currentItem.status.toString()
         holder.itemView.setOnClickListener {
             listener.onFormClick(forms[position])
         }
@@ -55,10 +53,19 @@ class FormListAdapter(
     override fun getItemCount(): Int = forms.size
 
     interface OnFormClickListener {
-
         fun onFormClick(formModel: FormModel)
+    }
 
-
+    fun submitList(form: List<FormModel>) {
+        forms.clear()
+        forms.addAll(form)
+        notifyDataSetChanged()
+    }
+    fun updateItemStatus(position: Int, status: FormStatus) {
+        if (position in 0 until forms.size) {
+            forms[position].status = status
+            notifyItemChanged(position)
+        }
     }
 
 }

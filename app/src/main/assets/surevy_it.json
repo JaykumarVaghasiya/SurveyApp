@@ -1,0 +1,174 @@
+{
+   "title":"sampleForm",
+   "description":"This is a sample form description.",
+   "userId": "",
+   "formId":"2",
+   "status":"PENDING",
+   "questions":[
+      {
+         "number":1,
+         "question":"What is your favorite color?",
+         "options":[
+            "Red",
+            "Blue",
+            "Green",
+            "Yellow"
+         ],
+         "answer":""
+      },
+      {
+         "number":2,
+         "question":"How often do you exercise?",
+         "options":[
+            "Never",
+            "Once a week",
+            "A few times a week",
+            "Every day"
+         ],
+         "answer":""
+      },
+      {
+         "number":3,
+         "question":"What is your favorite animal?",
+         "options":[
+            "Dog",
+            "Cat",
+            "Bird",
+            "Fish"
+         ],
+         "answer":""
+      },
+      {
+         "number":4,
+         "question":"Which programming language do you prefer?",
+         "options":[
+            "Python",
+            "Java",
+            "JavaScript",
+            "C++"
+         ],
+         "answer":""
+      },
+      {
+         "number":5,
+         "question":"What is your favorite food?",
+         "options":[
+            "Pizza",
+            "Burger",
+            "Sushi",
+            "Salad"
+         ],
+         "answer":""
+      },
+      {
+         "number":6,
+         "question":"How do you like to spend your weekends?",
+         "options":[
+            "Watching movies",
+            "Hiking",
+            "Reading books",
+            "Cooking"
+         ],
+         "answer":""
+      },
+      {
+         "number":7,
+         "question":"What is your preferred mode of transportation?",
+         "options":[
+            "Car",
+            "Bicycle",
+            "Public transit",
+            "Walking"
+         ],
+         "answer":""
+      },
+      {
+         "number":8,
+         "question":"What is your favorite season?",
+         "options":[
+            "Spring",
+            "Summer",
+            "Fall",
+            "Winter"
+         ],
+         "answer":""
+      },
+      {
+         "number":9,
+         "question":"How many hours of sleep do you get on average?",
+         "options":[
+            "Less than 5 hours",
+            "5-7 hours",
+            "7-9 hours",
+            "More than 9 hours"
+         ],
+         "answer":""
+      },
+      {
+         "number":10,
+         "question":"What is your favorite movie genre?",
+         "options":[
+            "Action",
+            "Comedy",
+            "Drama",
+            "Sci-Fi"
+         ],
+         "answer":""
+      },
+      {
+         "number":11,
+         "question":"What is your preferred type of vacation?",
+         "options":[
+            "Beach",
+            "Mountain",
+            "City",
+            "Adventure"
+         ],
+         "answer":""
+      },
+      {
+         "number":12,
+         "question":"Which social media platform do you use the most?",
+         "options":[
+            "Facebook",
+            "Instagram",
+            "Twitter",
+            "LinkedIn"
+         ],
+         "answer":""
+      },
+      {
+         "number":13,
+         "question":"What is your favorite book genre?",
+         "options":[
+            "Mystery",
+            "Fantasy",
+            "Romance",
+            "Science Fiction"
+         ],
+         "answer":""
+      },
+      {
+         "number":14,
+         "question":"What type of music do you enjoy listening to?",
+         "options":[
+            "Pop",
+            "Rock",
+            "Hip-hop",
+            "Country"
+         ],
+         "answer":""
+      },
+      {
+         "number":15,
+         "question":"What is your favorite hobby?",
+         "options":[
+            "Painting",
+            "Gardening",
+            "Playing an instrument",
+            "Cooking"
+         ],
+         "answer":""
+      }
+   ]
+}

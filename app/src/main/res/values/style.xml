@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Theme.RemoveSplashScreenTheme" parent="@style/Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/black</item>
         <item name="colorAccent">@color/white</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
+
+    <style name="AppTheme" parent="@style/Theme.Material3.DayNight" tools:ignore="ResourceCycle">
+        <item name="colorPrimary">@color/skyBlue</item>
+        <item name="colorPrimaryDark">@color/skyBlue</item>
+        <item name="colorAccent">@color/skyBlue</item>
+        <item name="actionBarTheme">@color/navyBlue</item>
+    </style>
+
+
+
+
 </resources>

@@ -1,0 +1,116 @@
+{
+  "title": "AI Survey",
+  "description": "This survey is about your knowledge and opinions on Artificial Intelligence (AI).",
+  "formId": "5",
+  "userId": "",
+  "status": "PENDING",
+  "questions": [
+    {
+      "number": 1,
+      "question": "Are you familiar with the concept of Artificial Intelligence (AI)?",
+      "options": [
+        "Yes, very familiar",
+        "Somewhat familiar",
+        "Not familiar at all"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 2,
+      "question": "Have you personally used or interacted with AI-powered applications or services?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 3,
+      "question": "How do you think AI is currently impacting various industries?",
+      "options": [
+        "Driving automation and efficiency",
+        "Enhancing customer experiences",
+        "Improving healthcare diagnostics",
+        "Transforming the automotive industry",
+        "Other (please specify)"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 4,
+      "question": "Do you have any concerns about the ethical implications of AI?",
+      "options": [
+        "Yes, significant concerns",
+        "Some concerns",
+        "No concerns"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 5,
+      "question": "What areas of AI research or applications are you most interested in?",
+      "options": [
+        "Machine learning and deep learning",
+        "Natural language processing (NLP)",
+        "Computer vision",
+        "Robotics",
+        "AI in healthcare",
+        "AI in education",
+        "Other (please specify)"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 6,
+      "question": "In your opinion, what are the potential benefits of further advancements in AI technology?",
+      "options": [
+        "Solving complex problems",
+        "Enhancing decision-making",
+        "Creating new job opportunities",
+        "Improving daily life"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 7,
+      "question": "What do you see as the biggest challenges or risks associated with AI development and deployment?",
+      "options": [
+        "Job displacement due to automation",
+        "Bias and fairness issues",
+        "Privacy concerns",
+        "Security risks",
+        "Other (please specify)"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 8,
+      "question": "Are you optimistic or pessimistic about the future of AI and its impact on society?",
+      "options": [
+        "Optimistic",
+        "Pessimistic",
+        "Neutral"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 9,
+      "question": "Have you ever taken courses or attended seminars related to AI or machine learning?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "answer": ""
+    },
+    {
+      "number": 10,
+      "question": "Would you like to learn more about AI and its applications?",
+      "options": [
+        "Yes, definitely",
+        "Maybe",
+        "No"
+      ],
+      "answer": ""
+    }
+  ]
+}
