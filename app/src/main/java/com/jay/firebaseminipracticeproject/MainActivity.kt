@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +19,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jay.firebaseminipracticeproject.data.FormModel
-import com.jay.firebaseminipracticeproject.data.User
+import com.jay.firebaseminipracticeproject.data.FormStatus
 import com.jay.firebaseminipracticeproject.userRegistration.Login
 
 class MainActivity : AppCompatActivity(),
@@ -55,8 +54,11 @@ class MainActivity : AppCompatActivity(),
         formAdapter = FormListAdapter(form, this)
         formList.adapter = formAdapter
 
-        checkRoles()
+
         addSurvey = findViewById(R.id.btAddForm)
+
+        checkRoles(this, auth,addSurvey)
+
         val nestedScrollView = findViewById<NestedScrollView>(R.id.nestedScrollView)
         nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             if (scrollY > oldScrollY + 12 && addSurvey.isExtended) {
@@ -75,31 +77,23 @@ class MainActivity : AppCompatActivity(),
 
         }
     }
+    override fun onResume() {
+        super.onResume()
+
+        if (formIdToSubmit.isNotEmpty() && updatedStatus == FormStatus.COMPLETED) {
+
+            val positionOfSubmittedForm = form.indexOfFirst { it.formId == formIdToSubmit }
 
 
-    private fun checkRoles() {
+            if (positionOfSubmittedForm != -1) {
+                formAdapter.updateItemStatus(positionOfSubmittedForm, updatedStatus)
+            } else {
 
-        val id = auth.uid
-        val db = FirebaseFirestore.getInstance()
-        if (id != null) {
-            db.collection("users").document(id)
-                .get()
-                .addOnSuccessListener { documentSnapshot ->
-                    if (documentSnapshot.exists()) {
-                        val userData = documentSnapshot.toObject(User::class.java)
-                        if (userData?.admin == true) {
-                            addSurvey.visibility = View.VISIBLE
-                        } else {
-                            addSurvey.visibility = View.GONE
-                        }
-                    } else {
-                        db.collection("forms")
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Toast.makeText(this, exception.message, Toast.LENGTH_SHORT).show()
-                }
+            }
         }
+
+        formIdToSubmit = ""
+        updatedStatus = FormStatus.PENDING
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -158,7 +152,10 @@ class MainActivity : AppCompatActivity(),
         start.setOnClickListener {
             val intent = Intent(this, FillSurveyActivity::class.java)
             intent.putExtra("form", formModel.formId)
-                .putExtra("user",auth.uid).putExtra("title",formModel.title).putExtra("description",formModel.description)
+                .putExtra("user",auth.uid)
+                .putExtra("title",formModel.title)
+                .putExtra("description",formModel.description)
+
             startActivity(intent)
             dialogBuilder.dismiss()
         }
@@ -168,21 +165,21 @@ class MainActivity : AppCompatActivity(),
     private fun setupFirestoreListener() {
         db.collection("forms")
             .addSnapshotListener { documentSnapShot, e ->
+
                 if (e != null) {
                     Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
                     return@addSnapshotListener
                 }
 
                 val formsArray = arrayListOf<FormModel>()
+
                 if (documentSnapShot != null) {
                     for (document in documentSnapShot) {
                         val form = document.toObject(FormModel::class.java)
                         formsArray.add(form)
                     }
                 }
-
                 formAdapter.submitList(formsArray)
             }
     }
-
 }

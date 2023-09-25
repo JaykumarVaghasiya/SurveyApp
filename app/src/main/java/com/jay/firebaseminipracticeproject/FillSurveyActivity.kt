@@ -1,6 +1,5 @@
 package com.jay.firebaseminipracticeproject
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -19,9 +18,10 @@ class FillSurveyActivity : AppCompatActivity(), Questions.FormSurveyListener {
     private lateinit var viewPager2: ViewPager2
     private lateinit var pagerAdapter: SurveyAdapter
     private lateinit var currentUser: FirebaseUser
+
     var formId = ""
-    var description = ""
-    var title = ""
+    private var description = ""
+    private var title = ""
 
     lateinit var questions: ArrayList<QuestionModel>
     private lateinit var submit: MaterialButton
@@ -81,9 +81,8 @@ class FillSurveyActivity : AppCompatActivity(), Questions.FormSurveyListener {
                 status = FormStatus.COMPLETED,
                 questions = questions
             )
-
             updateAnswerInFirestore(formModelToUpdate)
-            finish()
+
         }
 
     }
@@ -98,8 +97,8 @@ class FillSurveyActivity : AppCompatActivity(), Questions.FormSurveyListener {
     private fun updateAnswerInFirestore(formModel: FormModel) {
         val firestore = FirebaseFirestore.getInstance()
 
-
         val userId = currentUser.uid
+
 
         if (formModel.formId!!.isNotEmpty() && userId.isNotEmpty()) {
             val userFormsCollectionRef = firestore.collection("users")
@@ -112,9 +111,10 @@ class FillSurveyActivity : AppCompatActivity(), Questions.FormSurveyListener {
                 .addOnSuccessListener {
                     Toast.makeText(
                         this,
-                        "Form with answers updated successfully",
+                        R.string.answer_updated,
                         Toast.LENGTH_SHORT
                     ).show()
+                    finish()
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(
@@ -125,10 +125,4 @@ class FillSurveyActivity : AppCompatActivity(), Questions.FormSurveyListener {
                 }
         }
     }
-    private fun notifyStatusChanged(formModel: FormModel) {
-        val intent = Intent("com.your.package.formStatusChanged")
-        intent.putExtra("formId", formModel.formId)
-        sendBroadcast(intent)
-    }
-
 }

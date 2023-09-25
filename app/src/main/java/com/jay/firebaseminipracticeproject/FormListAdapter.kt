@@ -23,8 +23,8 @@ class FormListAdapter(
 
         fun bind(formModel: FormModel) {
             title.text = formModel.title
-            status.text = formModel.status.toString()
             desc.text = formModel.description
+            status.text = formModel.status.toString()
         }
     }
 

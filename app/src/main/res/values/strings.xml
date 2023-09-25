@@ -40,6 +40,6 @@
     <string name="total_questions">Total Questions:</string>
     <string name="or">or</string>
     <string name="empty_data">Empty Selected Answer</string>
-
+    <string name="answer_updated">Form with answers updated successfully</string>
     <style name="surveyApp_logo">Survey+ Logo</style>
 </resources>

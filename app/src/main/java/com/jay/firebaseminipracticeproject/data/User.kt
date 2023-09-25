@@ -9,5 +9,4 @@ data class User(
     val userName: String?= null,
     @SerializedName("admin")
     val admin: Boolean=false,
-
 )
