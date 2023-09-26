@@ -117,14 +117,14 @@ class RegistrationPage : AppCompatActivity() {
                         .addOnSuccessListener {
                             Toast.makeText(
                                 this@RegistrationPage,
-                                "User data saved successfully",
+                                R.string.user_data_saved,
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
                         .addOnFailureListener { e ->
                             Toast.makeText(
                                 this@RegistrationPage,
-                                "Failed to save response data: ${e.message}",
+                                e.message,
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
@@ -132,7 +132,7 @@ class RegistrationPage : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     Toast.makeText(
                         this@RegistrationPage,
-                        "Failed to save user data: ${e.message}",
+                        e.message,
                         Toast.LENGTH_SHORT
                     ).show()
                 }

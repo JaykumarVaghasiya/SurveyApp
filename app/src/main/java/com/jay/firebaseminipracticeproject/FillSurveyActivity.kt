@@ -132,7 +132,7 @@ class FillSurveyActivity : AppCompatActivity(), Questions.FormSurveyListener {
                 .addOnFailureListener { e ->
                     Toast.makeText(
                         this,
-                        "Error updating form with answers: ${e.message}",
+                        e.message,
                         Toast.LENGTH_SHORT
                     ).show()
                 }

@@ -44,4 +44,5 @@
     <style name="surveyApp_logo">Survey+ Logo</style>
     <string name="completed">You have Already Submitted this form.</string>
     <string name="not_completed_form">Please Filled all questions\'s answers</string>
+    <string name="user_data_saved">User data saved successfully</string>
 </resources>

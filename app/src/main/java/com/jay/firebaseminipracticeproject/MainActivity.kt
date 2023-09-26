@@ -142,16 +142,10 @@ class MainActivity : AppCompatActivity(),
 
                 userFormsCollectionRef.get().addOnSuccessListener { documentSnapshot ->
                     if (documentSnapshot.exists()) {
-
-                        userFormsCollectionRef.update("status", FormStatus.COMPLETED.toString())
-
-
                         val index = form.indexOf(formModel)
                         if (index != -1) {
                             form[index].status = FormStatus.COMPLETED
                         }
-                        formAdapter.notifyDataSetChanged()
-
                         Toast.makeText(this, R.string.completed, Toast.LENGTH_LONG).show()
                     } else {
                         showConfirmationDialog(formModel)

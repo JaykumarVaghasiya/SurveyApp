@@ -54,7 +54,7 @@ class FormListAdapter(
             val userId = user.uid
             val formId = currentItem.formId
 
-            if (userId != null && formId != null) {
+            if (formId != null) {
                 val userFormCollectionRef =
                     FirebaseFirestore.getInstance().collection("users").document(userId)
                         .collection("response").document(formId)

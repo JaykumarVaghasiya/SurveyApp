@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Theme.RemoveSplashScreenTheme" parent="@style/Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimary">@color/skyBlue</item>
         <item name="colorPrimaryDark">@color/skyBlue</item>
-        <item name="colorAccent">@color/white</item>
+        <item name="colorAccent">@color/skyBlue</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
@@ -13,8 +13,4 @@
         <item name="colorAccent">@color/skyBlue</item>
         <item name="actionBarTheme">@color/navyBlue</item>
     </style>
-
-
-
-
 </resources>
