@@ -13,12 +13,12 @@
         android:id="@+id/imageView3"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="72dp"
         android:background="@drawable/surveyplus"
+        android:contentDescription="@string/app_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/app_name"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/materialTextView2"

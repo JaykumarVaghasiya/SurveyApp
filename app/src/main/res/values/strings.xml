@@ -42,4 +42,6 @@
     <string name="empty_data">Empty Selected Answer</string>
     <string name="answer_updated">Form with answers updated successfully</string>
     <style name="surveyApp_logo">Survey+ Logo</style>
+    <string name="completed">You have Already Submitted this form.</string>
+    <string name="not_completed_form">Please Filled all questions\'s answers</string>
 </resources>

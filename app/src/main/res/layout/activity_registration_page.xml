@@ -141,13 +141,13 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/tvLogin"
+        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:clickable="true"
-        android:padding="2dp"
+        android:padding="8dp"
         android:text="@string/login_here"
-        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
         android:textColor="@color/skyBlue"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"

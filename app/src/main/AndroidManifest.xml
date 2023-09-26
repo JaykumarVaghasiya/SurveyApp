@@ -38,8 +38,8 @@
             android:parentActivityName=".userRegistration.Login" />
         <activity
             android:name=".userRegistration.Login"
-
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.RemoveSplashScreenTheme"/>
         <activity
             android:name=".MainActivity"
             android:exported="false" />

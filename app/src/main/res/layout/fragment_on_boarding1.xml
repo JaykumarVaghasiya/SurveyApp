@@ -8,8 +8,8 @@
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/imageView"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_centerInParent="true"
         android:src="@drawable/easy"
         app:layout_constraintBottom_toBottomOf="parent"

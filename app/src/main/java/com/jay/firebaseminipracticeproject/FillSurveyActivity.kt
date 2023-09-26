@@ -18,6 +18,7 @@ class FillSurveyActivity : AppCompatActivity(), Questions.FormSurveyListener {
     private lateinit var viewPager2: ViewPager2
     private lateinit var pagerAdapter: SurveyAdapter
     private lateinit var currentUser: FirebaseUser
+    private var allQuestionsAnswered = false
 
     var formId = ""
     private var description = ""
@@ -33,6 +34,7 @@ class FillSurveyActivity : AppCompatActivity(), Questions.FormSurveyListener {
         formId = intent.getStringExtra("form").toString()
         description = intent.getStringExtra("description").toString()
         title = intent.getStringExtra("title").toString()
+        supportActionBar?.title=title
 
         val db = FirebaseFirestore.getInstance()
         currentUser = FirebaseAuth.getInstance().currentUser!!
@@ -74,6 +76,7 @@ class FillSurveyActivity : AppCompatActivity(), Questions.FormSurveyListener {
             }
 
         submit.setOnClickListener {
+            if(areAllQuestionsAnswered()){
             val formModelToUpdate = FormModel(
                 title = title,
                 description = description,
@@ -83,8 +86,18 @@ class FillSurveyActivity : AppCompatActivity(), Questions.FormSurveyListener {
             )
             updateAnswerInFirestore(formModelToUpdate)
 
+        }else{
+            Toast.makeText(this,"",Toast.LENGTH_SHORT).show()
+            }
         }
-
+    }
+    private fun areAllQuestionsAnswered(): Boolean {
+        for (question in questions) {
+            if (question.answer?.isEmpty() == true) {
+                return false
+            }
+        }
+        return true
     }
 
     override fun onSubmitClick(questionModel: QuestionModel) {

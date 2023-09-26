@@ -17,6 +17,7 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jay.firebaseminipracticeproject.data.FormModel
 import com.jay.firebaseminipracticeproject.data.FormStatus
@@ -32,14 +33,34 @@ class MainActivity : AppCompatActivity(),
     private lateinit var form: ArrayList<FormModel>
     private lateinit var db: FirebaseFirestore
     private lateinit var jsonFileProcessor: JsonFileProcessor
-
+    private lateinit var userCollectionRef: CollectionReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        supportActionBar?.title = "Hello"
+
 
         auth = FirebaseAuth.getInstance()
+        userCollectionRef = FirebaseFirestore.getInstance().collection("users")
+
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            val userId = currentUser.uid
+
+            userCollectionRef.document(userId).get().addOnSuccessListener { documentSnapShot ->
+                if (documentSnapShot.exists()) {
+                    val userName = documentSnapShot.getString("userName")
+                    supportActionBar?.title = "Hello, $userName !!"
+                } else {
+                    Toast.LENGTH_SHORT
+                }
+            }.addOnFailureListener {
+                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
         db = FirebaseFirestore.getInstance()
+
         checkLoggedInState()
 
         FirebaseApp.initializeApp(this)
@@ -77,23 +98,10 @@ class MainActivity : AppCompatActivity(),
 
         }
     }
+
     override fun onResume() {
         super.onResume()
-
-        if (formIdToSubmit.isNotEmpty() && updatedStatus == FormStatus.COMPLETED) {
-
-            val positionOfSubmittedForm = form.indexOfFirst { it.formId == formIdToSubmit }
-
-
-            if (positionOfSubmittedForm != -1) {
-                formAdapter.updateItemStatus(positionOfSubmittedForm, updatedStatus)
-            } else {
-
-            }
-        }
-
-        formIdToSubmit = ""
-        updatedStatus = FormStatus.PENDING
+        refreshFormList()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -123,8 +131,36 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onFormClick(formModel: FormModel) {
-        showConfirmationDialog(formModel)
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            val userId = user.uid
+            val formId = formModel.formId
+
+            if (formId != null) {
+                val userFormsCollectionRef = db.collection("users").document(userId)
+                    .collection("response").document(formId)
+
+                userFormsCollectionRef.get().addOnSuccessListener { documentSnapshot ->
+                    if (documentSnapshot.exists()) {
+
+                        userFormsCollectionRef.update("status", FormStatus.COMPLETED.toString())
+
+
+                        val index = form.indexOf(formModel)
+                        if (index != -1) {
+                            form[index].status = FormStatus.COMPLETED
+                        }
+                        formAdapter.notifyDataSetChanged()
+
+                        Toast.makeText(this, R.string.completed, Toast.LENGTH_LONG).show()
+                    } else {
+                        showConfirmationDialog(formModel)
+                    }
+                }
+            }
+        }
     }
+
     private fun showConfirmationDialog(formModel: FormModel) {
 
         val dialogBuilder = Dialog(this)
@@ -164,8 +200,7 @@ class MainActivity : AppCompatActivity(),
 
     private fun setupFirestoreListener() {
         db.collection("forms")
-            .addSnapshotListener { documentSnapShot, e ->
-
+            .addSnapshotListener { documentSnapshot, e ->
                 if (e != null) {
                     Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
                     return@addSnapshotListener
@@ -173,8 +208,8 @@ class MainActivity : AppCompatActivity(),
 
                 val formsArray = arrayListOf<FormModel>()
 
-                if (documentSnapShot != null) {
-                    for (document in documentSnapShot) {
+                if (documentSnapshot != null) {
+                    for (document in documentSnapshot) {
                         val form = document.toObject(FormModel::class.java)
                         formsArray.add(form)
                     }
@@ -182,4 +217,20 @@ class MainActivity : AppCompatActivity(),
                 formAdapter.submitList(formsArray)
             }
     }
+    private fun refreshFormList() {
+        db.collection("forms")
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val formsArray = arrayListOf<FormModel>()
+                for (document in querySnapshot) {
+                    val form = document.toObject(FormModel::class.java)
+                    formsArray.add(form)
+                }
+                formAdapter.submitList(formsArray)
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, exception.message, Toast.LENGTH_SHORT).show()
+            }
+    }
+
 }
